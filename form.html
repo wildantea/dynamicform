@@ -1,0 +1,68 @@
+
+               <div class="form-group cloneable_pesertas">
+                <div class="row">
+                   <div class="col-lg-2">&nbsp;</div>
+                  <div class="col-lg-5">
+                  <label for="exampleInputEmail1">Nama Peserta</label>
+                  </div>
+                  <div class="col-lg-5">
+                    <label for="exampleInputEmail1">Instansi/Organisasi</label>
+                </div>
+                </div>
+                <div class="row clone_peserta" style="margin-bottom: 3px;">
+                <div class="col-lg-2 numbering" style="text-align: right;padding-top: 5px;padding-right: 0;">1</div>
+                <div class="col-lg-5">
+                 
+                  <input type="text" name="nama_peserta[]" class="form-control" placeholder="Nama Peserta">
+                </div>
+                <div class="col-lg-3">
+                  <input type="text" name="organisasi[]" class="form-control" placeholder="Instansi/Organisasi">
+                </div>
+                <div class="col-lg-2" style="padding-left: 0;" ><span class="btn btn-success btn-add-peserta"><i class="glyphicon glyphicon-plus"></i></span>
+                
+                </div>
+                </div>
+              </div><!-- /.form-group -->
+              
+              
+$(document).ready(function() {
+   
+           var max_fields_limit      = 10; //set limit for maximum input fields
+          $(document).on('click', '.btn-add-peserta', function(e)
+            {
+                e.preventDefault();
+
+                 // var x = 1; //initialize counter for text box
+                var x = $(".clone_peserta").length+1;
+                    if(x <= max_fields_limit){ //check conditions
+                    
+                var controlForm = $('.cloneable_pesertas:first'),
+                    currentEntry = $(this).parents('.clone_peserta:first'),
+                    newEntry = $(currentEntry.clone()).appendTo(controlForm);
+
+                newEntry.find('.numbering').text(x);
+                controlForm.find('.clone_peserta:not(:last) .btn-add-peserta')
+                    .removeClass('btn-add-peserta').addClass('btn-remove-peserta')
+                    .removeClass('btn-success').addClass('btn-danger')
+                    .html('<span class="glyphicon glyphicon-minus"></span>');
+                     x++; //counter increment
+            }
+            });
+
+           $(document).on('click', '.btn-remove-peserta', function(e) 
+            {
+              
+            $(this).parents('.clone_peserta:first').remove();
+                    var new_number = 1;
+                    $('.numbering').each(function() {
+                         $(this).text(new_number)
+                         new_number++;
+                    })
+
+            e.preventDefault();
+            return false;
+
+           
+
+          });
+});
